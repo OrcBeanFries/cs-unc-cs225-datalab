@@ -1,7 +1,7 @@
 /* 
  * CS:APP Data Lab 
  * 
- * Dean Carothers, OrcBeanFries
+ * Dean Carothers,  or OrcBeanFries on Github
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -178,13 +178,7 @@ NOTES:
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-  int a = (~x) & (~y);
-  int b = x & y;
-  int c = ~a;
-  int d = ~b;
-  int result = c & d;
-  return result;
-
+  return 2;
 }
 //2
 /* 
@@ -196,27 +190,7 @@ int bitXor(int x, int y) {
  *   Rating: 2
  */
 int allEvenBits(int x) {
-  int y;
-  int temp;
-  int result;
-
-  y = 0x00000055;
-  temp = !((x & y) ^ y);
-  result = temp;
-
-  y <<= 8;
-  temp = !((x & y) ^ y);
-  result &= temp;
-
-  y <<= 8;
-  temp = !((x & y) ^ y);
-  result &= temp;
-
-  y <<= 8;
-  temp = !((x & y) ^ y);
-  result &= temp;
-
-  return result;
+  return 2;
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -227,27 +201,7 @@ int allEvenBits(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  int y;
-  int temp;
-  int result;
-
-  y = 0x0000AAAA;
-  temp = !((x & y) ^ y);
-  result = temp;
-
-  y <<= 16;
-  temp = !((x & y) ^ y);
-  result &= temp;
-
-  // y <<= 8;
-  // temp = !((x & y) ^ y);
-  // result &= temp;
-
-  // y <<= 8;
-  // temp = !((x & y) ^ y);
-  // result &= temp;
-
-  return result;
+  return 2;
 }
 //3
 /* 
@@ -259,7 +213,7 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int dividePower2(int x, int n) {
-    return (x + ((x >> 31) & ((1 << n) + ~0))) >> n;
+    return 2;
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -269,18 +223,7 @@ int dividePower2(int x, int n) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  int xSign; 
-  int ySign;
-  int diffSign;
-  int answer;
-
-  xSign = (x >> 31) & 1;
-  ySign = (y>>31) & 1;
-  diffSign = ((y+~x+1)>>31)&1;
-
-  answer = ((!ySign) & xSign) | ((!(xSign^ySign)) & !diffSign);
-
-  return answer;
+  return 2;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
@@ -303,11 +246,6 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int replaceByte(int x, int n, int c) {
-  int index = (2 * n)+1;
-  
-  int retainer = x << (8-index);
-  
-  
   return 2;
 }
 //4
@@ -320,8 +258,6 @@ int replaceByte(int x, int n, int c) {
  *   Rating: 3
  */
 int remainderPower2(int x, int n) {
-    int divis = 1 << n;
-
     return 2;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
@@ -347,8 +283,6 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 int bitParity(int x) {
-
-
   return 2;
 }
 //float
@@ -364,9 +298,7 @@ int bitParity(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  
-
-  return 2; //   2 * uf
+  return 2;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
