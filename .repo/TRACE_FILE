@@ -1,0 +1,12 @@
+PID: 36073 START: 1729145098745438720 :+++++++++++++++NEW COMMAND+++++++++++++++++++ starting new command: init [sid=repo-20241017T060442Z-P00008ce9/repo-20241017T060458Z-P00008ce9]
+
+PID: 36073 START: 1729145098753643776 :git command None ['git', 'config', '--get', 'trace2.eventtarget'] with debug: : git config --get trace2.eventtarget 1>| 2>|
+
+PID: 36073 END: 1729145098763772416 :git command None ['git', 'config', '--get', 'trace2.eventtarget'] with debug: : git config --get trace2.eventtarget 1>| 2>|
+
+PID: 36073 END: 1729145098764825600 :+++++++++++++++NEW COMMAND+++++++++++++++++++ starting new command: init [sid=repo-20241017T060442Z-P00008ce9/repo-20241017T060458Z-P00008ce9]
+
+PID: 36198 START: 1729145103677834752 :+++++++++++++++NEW COMMAND+++++++++++++++++++ starting new command: clone, CS-UNC/datalab-fix-OrcBeanFries [sid=repo-20241017T060502Z-P00008d66/repo-20241017T060503Z-P00008d66]
+
+PID: 36198 END: 1729145103680116480 :+++++++++++++++NEW COMMAND+++++++++++++++++++ starting new command: clone, CS-UNC/datalab-fix-OrcBeanFries [sid=repo-20241017T060502Z-P00008d66/repo-20241017T060503Z-P00008d66]
+
