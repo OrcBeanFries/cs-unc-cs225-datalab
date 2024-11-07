@@ -180,11 +180,11 @@ NOTES:
 int bitXor(int x, int y) {
   int a = (~x) & (~y);
   int b = x & y;
+  
   int c = ~a;
   int d = ~b;
-  int result = c & d;
-  return result;
 
+  return c & d;
 }
 //2
 /* 
@@ -196,9 +196,7 @@ int bitXor(int x, int y) {
  *   Rating: 2
  */
 int allEvenBits(int x) {
-  int y;
-  int temp;
-  int result;
+  int y, temp, result;
 
   y = 0x00000055;
   temp = !((x & y) ^ y);
@@ -227,25 +225,23 @@ int allEvenBits(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  int y;
-  int temp;
-  int result;
+  int y, temp, result;
 
-  y = 0x0000AAAA;
+  y = 0x000000AA;
   temp = !((x & y) ^ y);
   result = temp;
 
-  y <<= 16;
+  y <<= 8;
   temp = !((x & y) ^ y);
   result &= temp;
 
-  // y <<= 8;
-  // temp = !((x & y) ^ y);
-  // result &= temp;
+  y <<= 8;
+  temp = !((x & y) ^ y);
+  result &= temp;
 
-  // y <<= 8;
-  // temp = !((x & y) ^ y);
-  // result &= temp;
+  y <<= 8;
+  temp = !((x & y) ^ y);
+  result &= temp;
 
   return result;
 }
@@ -259,7 +255,15 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int dividePower2(int x, int n) {
-    return (x + ((x >> 31) & ((1 << n) + ~0))) >> n;
+  int a, b, c, d;
+
+  a = x >> 31;
+  b = 1 << n;
+  
+  c = b + ~0;
+  d = a & c;
+
+  return (x + d) >> n;
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -269,18 +273,17 @@ int dividePower2(int x, int n) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  int xSign; 
-  int ySign;
-  int diffSign;
-  int answer;
+  int a, b, c, d, e, f; 
 
-  xSign = (x >> 31) & 1;
-  ySign = (y>>31) & 1;
-  diffSign = ((y+~x+1)>>31)&1;
+  a = (x >> 31) & 1;
+  b = (y >> 31) & 1;
+  c = ((y + ~x + 1) >> 31) & 1;
 
-  answer = ((!ySign) & xSign) | ((!(xSign^ySign)) & !diffSign);
+  d = !b & a;
+  e = !(a^b);
+  f = e & !c;
 
-  return answer;
+  return d | f;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
@@ -291,7 +294,14 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return 2;
+  int a, b, c, d;
+
+  a = x+y;
+  b = x>>31;
+  c = y>>31;
+  d = a>>31;
+
+  return !!(b^c) | (!(b^d) & !(c^d));
 }
 /* 
  * replaceByte(x,n,c) - Replace byte n in x with c
@@ -303,12 +313,15 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int replaceByte(int x, int n, int c) {
-  int index = (2 * n)+1;
-  
-  int retainer = x << (8-index);
-  
-  
-  return 2;
+  int a, b, d;
+
+  a = n << 3;
+  b = 0xff << a;
+
+  d = c << a;
+
+  return (x & ~b) | d;
+
 }
 //4
 /* 
@@ -320,9 +333,16 @@ int replaceByte(int x, int n, int c) {
  *   Rating: 3
  */
 int remainderPower2(int x, int n) {
-    int divis = 1 << n;
+  int a, b, c, d, e;
 
-    return 2;
+  a = (1 << n) + ~0;  // 2^n - 1 under two's C
+  b = x >> 31;
+  c = x & a;
+
+  d = (!!c) << n;
+  e = ((~d + 1) & b);
+
+  return c + e;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -337,7 +357,27 @@ int remainderPower2(int x, int n) {
  *  Rating: 4
  */
 int howManyBits(int x) {
-  return 0;
+  int a, b, c, d, e, f;
+
+  a = x >> 31;
+  x = (a & ~x) | (~a & x);
+    
+  f = !!(x >> 16) << 4;
+  x = x >> f;
+    
+  e = !!(x >> 8) << 3;
+  x = x >> e;
+    
+  d = !!(x >> 4) << 2;
+  x = x >> d;
+    
+  c = !!(x >> 2) << 1;
+  x = x >> c;
+    
+  b = !!(x >> 1);
+  x = x >> b;
+
+  return x + b + c + d + e + f + 1;
 }
 /*
  * bitParity - returns 1 if x contains an odd number of 0's
@@ -347,9 +387,12 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 int bitParity(int x) {
-
-
-  return 2;
+  x = x ^ (x >> 16);
+  x = x ^ (x >> 8);
+  x = x ^ (x >> 4);
+  x = x ^ (x >> 2);
+  x = x ^ (x >> 1);
+  return x & 1;
 }
 //float
 /* 
@@ -364,9 +407,14 @@ int bitParity(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  
+	if ((uf & 0x7F800000) == 0){
+		uf = ((uf & 0x007FFFFF) << 1) | (0x80000000 & uf);
+  }
+	else if ((uf & 0x7F800000) != 0x7F800000){
+		uf = uf + 0x00800000;
+  }
 
-  return 2; //   2 * uf
+	return uf;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -381,5 +429,18 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  return 2;
+  int TMin = 0x1 << 31; 
+  int sign = uf >> 31;   
+  int frac = uf & 0x007fffff;   
+  int e = ((uf >> 23) & 0xff) - 127;  
+  int M = frac | (0x1 << 23);
+
+  if(e < 0) return 0;
+  if(e > 31) return TMin;
+  if(e > 23) M = M << (e - 23);
+  else M = M >> (23-e); 
+
+  if(!((M >> 31) ^ sign)) return M;
+  else if(M >> 31) return TMin;
+  else return ~M + 1;  
 }
