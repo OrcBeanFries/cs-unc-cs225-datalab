@@ -16,7 +16,7 @@
 #if 0
 /*
  * Instructions to Students:
- *
+ *  
  * STEP 1: Read the following instructions carefully.
  */
 
@@ -429,18 +429,19 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  int TMin = 0x1 << 31; 
-  int sign = uf >> 31;   
-  int frac = uf & 0x007fffff;   
-  int e = ((uf >> 23) & 0xff) - 127;  
-  int M = frac | (0x1 << 23);
+  int a, b, c, d, M;
+  a = 0x1 << 31; 
+  b = uf >> 31;   
+  c = uf & 0x007fffff;   
+  d = ((uf >> 23) & 0xff) - 127;  
+  M = c | (0x1 << 23);
 
-  if(e < 0) return 0;
-  if(e > 31) return TMin;
-  if(e > 23) M = M << (e - 23);
-  else M = M >> (23-e); 
+  if(d < 0) return 0;
+  if(d > 31) return a;
+  if(d > 23) M = M << (d - 23);
+  else M = M >> (23-d); 
 
-  if(!((M >> 31) ^ sign)) return M;
-  else if(M >> 31) return TMin;
+  if(!((M >> 31) ^ b)) return M;
+  else if(M >> 31) return a;
   else return ~M + 1;  
 }
