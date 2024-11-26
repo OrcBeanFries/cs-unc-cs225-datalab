@@ -436,12 +436,28 @@ int floatFloat2Int(unsigned uf) {
   d = ((uf >> 23) & 0xff) - 127;  
   M = c | (0x1 << 23);
 
-  if(d < 0) return 0;
-  if(d > 31) return a;
-  if(d > 23) M = M << (d - 23);
-  else M = M >> (23-d); 
+  if (d < 0){
+    return 0;
+  }
 
-  if(!((M >> 31) ^ b)) return M;
-  else if(M >> 31) return a;
-  else return ~M + 1;  
+  if (d > 31){
+    return a;
+  } 
+
+  if (d > 23){
+    M = M << (d - 23);
+  }
+  else{
+    M = M >> (23-d); 
+  }
+
+  if (!((M >> 31) ^ b)){
+    return M;
+  }
+  else if (M >> 31){
+    return a;
+  } 
+  else {
+    return ~M + 1;
+  }   
 }
